@@ -1,0 +1,37 @@
+name: "Terraform"
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["terraform/**"]
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    name: "Terraform Workflow"
+    runs-on: "ubuntu-latest"
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+
+    steps:
+      - name: "Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION_NAME }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Terraform init
+        run: terraform init -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=${{ secrets.AWS_BUCKET_FILE }}"
+      
+      - name: Terraform Apply
+        run: terraform apply --auto-approve
+
+          
+      
