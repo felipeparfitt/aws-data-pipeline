@@ -40,3 +40,6 @@ help.txt
 include/
 logs/
 dags/
+set_env_vars.sh
+builds/
+connect_to_mysql.sh
