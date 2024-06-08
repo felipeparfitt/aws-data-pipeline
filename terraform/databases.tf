@@ -33,3 +33,7 @@ resource "aws_db_instance" "mysql_database" {
   # Snapshot = copia dos dados; Neste caso, não sera criado um copia (sem backup) ao ser deletado
   skip_final_snapshot = true
 }
+
+data "aws_secretsmanager_secret" "mysql_secret" {
+  arn = aws_db_instance.mysql_database.master_user_secret[0]["secret_arn"]
+}

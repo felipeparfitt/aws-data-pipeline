@@ -57,3 +57,39 @@ variable "aws_security_group_name_lambda" {
   type        = string
   nullable    = false
 }
+
+variable "aws_glue_crawler_role_name" {
+  description = "Glue crawler role name"
+  type        = string
+  nullable    = false
+}
+
+variable "aws_glue_catalog_database_name" {
+  description = "Glue catalog database name"
+  type        = string
+  nullable    = false
+}
+
+variable "aws_glue_crawler_name" {
+  description = "Glue crawler name"
+  type        = string
+  nullable    = false
+}
+
+variable "aws_glue_connection_name" {
+  description = "Glue connection name"
+  type        = string
+  nullable    = false
+}
+
+variable "aws_lambda_function_name" {
+  description = "Lambda function name"
+  type        = string
+  nullable    = false
+}
+
+variable "python_version" {
+  description = "Python version used on lambda function"
+  type        = string
+  nullable    = false
+}

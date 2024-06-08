@@ -1,0 +1,10 @@
+{
+    "AWS_GLUE_DATABASE_NAME" : "aws-data-pipeline-glue-database",
+    "AWS_LAMBDA_FUNCTION_NAME" : "populate-mysql-rds",
+    "AWS_GLUE_CRAWLER_NAME": "aws-data-pipeline-glue-crawler",
+    "LAMBDA_PAYLOAD": {
+        "nclients": 500,
+        "n_people_sales": 20,
+        "n_sales": 3000
+    }
+}
