@@ -44,3 +44,5 @@ set_env_vars.sh
 builds/
 connect_to_mysql.sh
 test.ipynb
+glue_crawler_for_mysql.tf
+emr_test_cp.py

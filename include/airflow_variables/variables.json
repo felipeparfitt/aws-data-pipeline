@@ -1,10 +1,62 @@
 {
-    "AWS_GLUE_DATABASE_NAME" : "aws-data-pipeline-glue-database",
-    "AWS_LAMBDA_FUNCTION_NAME" : "populate-mysql-rds",
-    "AWS_GLUE_CRAWLER_NAME": "aws-data-pipeline-glue-crawler",
-    "LAMBDA_PAYLOAD": {
-        "nclients": 500,
-        "n_people_sales": 20,
-        "n_sales": 3000
-    }
+  "AWS_GLUE_CRAWLER_NAME": {
+    "sensitive": false,
+    "type": "string",
+    "value": "aws-data-pipeline-glue-crawler"
+  },
+  "AWS_GLUE_DATABASE_NAME": {
+    "sensitive": false,
+    "type": "string",
+    "value": "aws-data-pipeline-glue-database"
+  },
+  "AWS_LAMBDA_FUNCTION_NAME": {
+    "sensitive": false,
+    "type": "string",
+    "value": "populate-mysql-rds"
+  },
+  "AWS_REGION": {
+    "sensitive": false,
+    "type": "string",
+    "value": "us-east-2"
+  },
+  "DELTA_LAKE_BUCKET_NAME": {
+    "sensitive": false,
+    "type": "string",
+    "value": "aws-data-pipeline-delta-lake-dev-612649281430"
+  },
+  "DMS_REPL_TASK_ARN": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:dms:us-east-2:612649281430:task:WZ3HTVW6QRG6ZFVVN6NP2ZTVIQ"
+  },
+  "EMR_JOB_FLOW_ROLE": {
+    "sensitive": false,
+    "type": "string",
+    "value": "emr-ec2-role-profile"
+  },
+  "EMR_SERVICE_ROLE": {
+    "sensitive": false,
+    "type": "string",
+    "value": "emr-service-role"
+  },
+  "EMR_SUBNET_EC2_ID": {
+    "sensitive": false,
+    "type": "string",
+    "value": "subnet-080ea0fc098174ff4"
+  },
+  "ETL_PYFILES_S3_PATH": {
+    "sensitive": false,
+    "type": "string",
+    "value": "s3://aws-data-pipeline-mwaa-dev-612649281430/emr_functions/emr_delta_transformation.py"
+  },
+  "ETL_SCRIPT_S3_PATH": {
+    "sensitive": false,
+    "type": "string",
+    "value": "s3://aws-data-pipeline-mwaa-dev-612649281430/emr_functions/emr_delta_lake.py"
+  },
+  "PATH_S3_LOGS": {
+    "sensitive": false,
+    "type": "string",
+    "value": "s3://aws-data-pipeline-emr-logs-dev-612649281430/elasticmapreduce"
+  }
 }

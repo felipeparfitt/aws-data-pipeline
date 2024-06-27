@@ -11,7 +11,7 @@ module "lambda_function" {
   source_path = "../include/lambda_functions"
 
   vpc_subnet_ids         = module.vpc.private_subnets
-  vpc_security_group_ids = [module.lambda_security_group.security_group_id]
+  vpc_security_group_ids = [module.security_group_lambda.security_group_id]
 
 
   attach_network_policy = true

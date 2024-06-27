@@ -25,7 +25,7 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
 
-  tags = var.aws_project_tags
+  tags = merge(var.aws_project_tags, { "for-use-with-amazon-emr-managed-policies" : "true" })
 }
 
 module "security_group_rds" {
@@ -65,4 +65,42 @@ module "security_group_lambda" {
   vpc_id      = module.vpc.vpc_id
 
   egress_rules = ["all-all"]
+}
+
+
+module "security_group_mwaa" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "4.17.2"
+
+  name   = var.aws_security_group_name_mwaa
+  vpc_id = module.vpc.vpc_id
+
+
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
+      description = "Allow HTTPS access from anywhere"
+    },
+    {
+      from_port   = 5432
+      to_port     = 5432
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
+      description = "Allow PostgreSQL traffic"
+    }
+  ]
+  ingress_with_self = [
+    {
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      description = "Self-referencing rule allowing all inbound traffic"
+    }
+  ]
+  egress_rules = ["all-all"]
+
+  tags = var.aws_project_tags
 }
