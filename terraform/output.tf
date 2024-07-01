@@ -1,18 +1,3 @@
-# output "rds_hostname" {
-#   description = "RDS instance hostname"
-#   value       = aws_db_instance.mysql_database.address
-#   sensitive   = true
-# }
-# output "rds_port" {
-#   description = "RDS instance port"
-#   value       = aws_db_instance.mysql_database.port
-#   sensitive   = true
-# }
-# output "rds_username" {
-#   description = "RDS instance root username"
-#   value       = aws_db_instance.mysql_database.username
-#   sensitive   = true
-# }
 output "AWS_REGION" {
   description = "AWS Region to deploy resources for development"
   value       = var.aws_region
@@ -78,9 +63,3 @@ output "DELTA_LAKE_BUCKET_NAME" {
   value       = module.s3_bucket[0].s3_bucket_id
   sensitive   = false
 }
-
-# output "mysqldb_password" {
-#   description = "RDS MYSQL secret password"
-#   value       = jsondecode(data.aws_secretsmanager_secret_version.mysql_secret_version.secret_string).password
-#   sensitive   = true
-# }

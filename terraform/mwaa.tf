@@ -67,19 +67,19 @@ resource "aws_mwaa_environment" "name" {
 
 locals {
   secrets = {
-    "AWS_REGION"               = var.aws_region
-    "AWS_GLUE_DATABASE_NAME"   = var.aws_glue_catalog_database_name
-    "AWS_LAMBDA_FUNCTION_NAME" = var.aws_lambda_function_name
-    "AWS_GLUE_CRAWLER_RAW_NAME"    = var.aws_glue_crawler_raw_name
-    "AWS_GLUE_CRAWLER_GOLD_NAME"    = var.aws_glue_crawler_gold_name
-    "EMR_SERVICE_ROLE"         = var.aws_emr_service_role_name
-    "EMR_JOB_FLOW_ROLE"        = var.aws_emr_ec2_profile_name
-    "PATH_S3_LOGS"             = "s3://${module.s3_bucket[2].s3_bucket_id}/elasticmapreduce"
-    "EMR_SUBNET_EC2_ID"        = module.vpc.public_subnets[0]
-    "ETL_SCRIPT_S3_PATH"       = "s3://${module.s3_bucket[1].s3_bucket_id}/emr_functions/emr_delta_lake.py"
-    "ETL_PYFILES_S3_PATH"      = "s3://${module.s3_bucket[1].s3_bucket_id}/emr_functions/emr_delta_transformation.py"
-    "DMS_REPL_TASK_ARN"        = module.database_migration_service.replication_tasks["s3_import"].replication_task_arn
-    "DELTA_LAKE_BUCKET_NAME"   = module.s3_bucket[0].s3_bucket_id
+    "AWS_REGION"                 = var.aws_region
+    "AWS_GLUE_DATABASE_NAME"     = var.aws_glue_catalog_database_name
+    "AWS_LAMBDA_FUNCTION_NAME"   = var.aws_lambda_function_name
+    "AWS_GLUE_CRAWLER_RAW_NAME"  = var.aws_glue_crawler_raw_name
+    "AWS_GLUE_CRAWLER_GOLD_NAME" = var.aws_glue_crawler_gold_name
+    "EMR_SERVICE_ROLE"           = var.aws_emr_service_role_name
+    "EMR_JOB_FLOW_ROLE"          = var.aws_emr_ec2_profile_name
+    "PATH_S3_LOGS"               = "s3://${module.s3_bucket[2].s3_bucket_id}/elasticmapreduce"
+    "EMR_SUBNET_EC2_ID"          = module.vpc.public_subnets[0]
+    "ETL_SCRIPT_S3_PATH"         = "s3://${module.s3_bucket[1].s3_bucket_id}/emr_functions/emr_delta_lake.py"
+    "ETL_PYFILES_S3_PATH"        = "s3://${module.s3_bucket[1].s3_bucket_id}/emr_functions/emr_delta_transformation.py"
+    "DMS_REPL_TASK_ARN"          = module.database_migration_service.replication_tasks["s3_import"].replication_task_arn
+    "DELTA_LAKE_BUCKET_NAME"     = module.s3_bucket[0].s3_bucket_id
   }
 }
 
@@ -91,12 +91,12 @@ module "secrets_manager_mwaa" {
 
   for_each = local.secrets
 
-  name = "${var.aws_mwaa_variables_prefix}/${each.key}"
+  name        = "${var.aws_mwaa_variables_prefix}/${each.key}"
   description = "Secret for ${var.aws_project_name}-MWAA"
 
   # Secret
   recovery_window_in_days = 0
-  secret_string = each.value
+  secret_string           = each.value
 
   #kms_key_id = aws_kms_key.this.id (Uses default aws/secretsmanager)
 

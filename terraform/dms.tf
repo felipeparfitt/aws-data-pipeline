@@ -1,56 +1,4 @@
-# # Pega a partição do AWS (divisão lógica e independente da infraestrutura e serviços da Amazon Web Services)
-# data "aws_partition" "current" {}
-# data "aws_region" "current" {}
-# # get the access to AccountID/UserID/ARN in which Terraform is authorized
-# data "aws_caller_identity" "current" {}
-
-
-# resource "aws_dms_replication_subnet_group" "example" {
-#   replication_subnet_group_description = "DMS Subnet group for ${module.vpc.database_subnet_group_name}"
-#   replication_subnet_group_id          = module.vpc.database_subnet_group_name
-
-#   subnet_ids = module.vpc.database_subnets
-#   # repl_subnet_group_name        = module.vpc.database_subnet_group_name
-#   # repl_subnet_group_description = "DMS Subnet group for ${module.vpc.database_subnet_group_name}"
-#   # repl_subnet_group_subnet_ids  = module.vpc.database_subnets
-
-
-#   tags = {
-#     Name = "example"
-#   }
-# }
-
-
-
-# resource "aws_dms_replication_instance" "default" {
-#   allocated_storage            = 50
-#   apply_immediately            = false
-#   replication_instance_class   = "dms.t2.micro"
-#   auto_minor_version_upgrade   = true
-#   availability_zone            = local.azs[0]
-#   engine_version               = "3.5.2"
-#   multi_az                     = false
-#   publicly_accessible          = false
-#   preferred_maintenance_window = "sun:10:30-sun:14:30"
-
-#   replication_instance_id      = "${var.aws_project_name}-ReplInstance"
-#   replication_subnet_group_id  =  aws_dms_replication_subnet_group.example.id #module.database_migration_service.replication_subnet_group_id #aws_dms_replication_subnet_group.test-dms-replication-subnet-group-tf.id
-#   vpc_security_group_ids = [module.security_group_rds.security_group_id]
-
-
-#   tags = var.aws_project_tags
-
-#   # depends_on = [
-#   #   aws_iam_role_policy_attachment.dms-access-for-endpoint-AmazonDMSRedshiftS3Role,
-#   #   aws_iam_role_policy_attachment.dms-cloudwatch-logs-role-AmazonDMSCloudWatchLogsRole,
-#   #   aws_iam_role_policy_attachment.dms-vpc-role-AmazonDMSVPCManagementRole
-#   # ]
-# }
-
-
-
-
-# Replication Task: configurações necessárias para replicar dados de uma origem para um destino ("uma maquina - EC2")
+# Replication Task: Required Configurations for Replicating Data from a Source to a Destination ("EC2 Instance")
 module "database_migration_service" {
   source  = "terraform-aws-modules/dms/aws"
   version = "2.2.0"
@@ -60,7 +8,7 @@ module "database_migration_service" {
   repl_subnet_group_description = "DMS Subnet group for ${module.vpc.database_subnet_group_name}"
   repl_subnet_group_subnet_ids  = module.vpc.database_subnets
 
-  # Instance (this is not created to avoid recreating every time)
+  # Instance
   create_repl_instance                       = true
   repl_instance_allocated_storage            = 50 #(default)
   repl_instance_engine_version               = "3.5.2"
@@ -123,14 +71,3 @@ module "database_migration_service" {
 
   tags = var.aws_project_tags
 }
-
-
-
-# resource "aws_dms_replication_instance" "test" {
-#   replication_instance_class                  = "dms.t2.micro"
-#   replication_instance_id                     = "${var.aws_project_name}-ReplInstance"
-
-#   lifecycle {
-
-#   }
-# }

@@ -32,8 +32,6 @@ class DeltaLakeOnAWS():
         deltaTable.generate("symlink_format_manifest")
             
     def write_to_silver(self, table_name: str = None, format: str = "delta", sql_query: str = None):
-        # REMVE FIELDS, CONCAT FIELDS, CHANGE THE TYPE, REPLACE EMPTY FIELDS WITH NULLS,
-        # FORMAT MORE OPTIMATIZED FOR DATA ANALISTICS
         
         # Reading data from bronze layer
         bronze_prefix = f'bronze/{table_name}'
@@ -56,7 +54,7 @@ class DeltaLakeOnAWS():
             silver_prefix = f'silver/{table}'
             df = self.spark.read.load(f"s3a://{self.delta_lake_bucket}/{silver_prefix}")
             df.createOrReplaceTempView(table)
-        # Transforming the bronze data using sql query
+        # Transforming the silver data using sql query
         df_gold = self.spark.sql(sql_query)
         
         # Write to gold layer

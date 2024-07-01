@@ -1,4 +1,4 @@
-locals{
+locals {
   delta_tables = [
     "sales_people_by_total",
     "sales_people_by_month",
@@ -11,9 +11,9 @@ locals{
   ]
 
   delta_paths = [
-      for delta_table in local.delta_tables : 
-      "s3://${module.s3_bucket[0].s3_bucket_id}/gold/${delta_table}"
-    ]
+    for delta_table in local.delta_tables :
+    "s3://${module.s3_bucket[0].s3_bucket_id}/gold/${delta_table}"
+  ]
 
 }
 
@@ -47,7 +47,7 @@ resource "aws_glue_crawler" "s3_gold_layer" {
   role          = aws_iam_role.glue_crawler_role.arn
 
   delta_target {
-    delta_tables = local.delta_paths
+    delta_tables   = local.delta_paths
     write_manifest = "false"
   }
 

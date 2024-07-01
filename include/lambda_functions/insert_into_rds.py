@@ -6,16 +6,16 @@ import json
 import random
 from mysql_commands import sql_commands, product_names
 
+# Getting useful variables
 aws_region = os.getenv('AWS_REGION_USED')
 mysql_user = os.getenv('MYSQL_USER')
 mysql_host = os.getenv('MYSQL_HOST')
 mysql_db = os.getenv('MYSQL_DB')
 aws_project_prefix = os.getenv('AWS_PROJECT_PREFIX')
  
-
+# Function to get RDS MySQL password from secrets manager  
 def get_rds_password(region_name=aws_region, project_tags=None):
 
-    
     session = boto3.session.Session()
     secret_client = session.client(
         service_name='secretsmanager',
@@ -45,6 +45,7 @@ def get_rds_password(region_name=aws_region, project_tags=None):
             'body': json.dumps({'error': str(e)})
         }
 
+# Function to connect to Mysql database
 def connect_to_database(sql_lib, user, passaword, host, db):
     try:
         conn = sql_lib.connect(
@@ -59,6 +60,7 @@ def connect_to_database(sql_lib, user, passaword, host, db):
     
     return conn
 
+# Function to drop existing tables
 def drop_tables(cur):
     try:
         # Temporarily disable foreign key checks
@@ -80,7 +82,7 @@ def drop_tables(cur):
         print(f"Error while dropping tables: {e}")
 
 
-
+# Function to populate MySQL database
 def populate_rds(event, context):
     
     mysql_tags = {"Project": aws_project_prefix, "Database": "mysql"}
