@@ -1,4 +1,4 @@
-resource "aws_mwaa_environment" "name" {
+resource "aws_mwaa_environment" "this" {
   name                            = var.aws_mwaa_environment_name
   airflow_version                 = var.aws_airflow_version
   weekly_maintenance_window_start = var.aws_weekly_maintenance_window_start
